@@ -6,8 +6,7 @@ import cors from "cors";
 import passport from "passport";
 import dotenv from "dotenv";
 
-import "./config/db.js";
-import "./config/mongodb.js";
+import passport from "./config/passport.js";
 
 import authRoutes from "./routes/auth.js";
 
@@ -17,15 +16,12 @@ connectDB();
 
 dotenv.config();
 
-// const __dirname = dirname(fileURLToPath(import.meta.url));
-
 //--------------------PORT--------------
 
 const app = express();
 app.use(cors());
 
 const port = process.env.PORT || 3000;
-const saltRounds = 10;
 
 // Parse JSON et URL-encoded
 app.use(express.json());

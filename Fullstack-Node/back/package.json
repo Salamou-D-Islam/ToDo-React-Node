@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@prisma/client": "^7.2.0",
     "body-parser": "^2.2.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
@@ -7,5 +8,8 @@
     "mongoose": "^9.1.2",
     "pg": "^8.16.3",
     "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "prisma": "^7.2.0"
   }
 }
