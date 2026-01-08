@@ -6,20 +6,20 @@ import cors from "cors";
 import passport from "passport";
 import dotenv from "dotenv";
 
-import passport from "./config/passport.js";
-
 import authRoutes from "./routes/auth.js";
-
-import { connectDB } from "./config/mongodb.js";
-
-connectDB();
 
 dotenv.config();
 
 //--------------------PORT--------------
 
 const app = express();
-app.use(cors());
+//app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 const port = process.env.PORT || 3000;
 
@@ -49,6 +49,10 @@ app.use(passport.session());
 
 app.use("/", authRoutes);
 
+app.get("/", (req, res) => {
+  res.json({ message: "Bienvenue sur le serveur backend !" });
+});
+//--------------------LISTEN--------------
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
