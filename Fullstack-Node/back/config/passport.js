@@ -1,9 +1,7 @@
 import passport from "passport";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../db/psql.js";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
-
-const prisma = new PrismaClient();
 
 passport.use(
   new LocalStrategy(
