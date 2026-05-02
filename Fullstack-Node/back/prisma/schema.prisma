@@ -27,3 +27,9 @@ model Blog {
   description   String
   createdAt DateTime @default(now())
 }
+
+model Todo {
+  id        Int      @id @default(autoincrement())
+  item     String
+  createdAt DateTime @default(now())
+}

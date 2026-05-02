@@ -7,6 +7,8 @@ import passport from "passport";
 import dotenv from "dotenv";
 
 import authRoutes from "./routes/auth.js";
+import blogRoutes from "./routes/blog.js";
+import todoRoutes from "./routes/todo.js";
 
 dotenv.config();
 
@@ -18,7 +20,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-  })
+  }),
 );
 
 const port = process.env.PORT || 3000;
@@ -41,13 +43,15 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
     },
-  })
+  }),
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", authRoutes);
+app.use("/", blogRoutes);
+app.use("/", todoRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Bienvenue sur le serveur backend !" });
