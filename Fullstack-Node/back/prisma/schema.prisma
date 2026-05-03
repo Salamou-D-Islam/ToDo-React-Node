@@ -19,6 +19,8 @@ model User {
   email     String @unique
   name      String
   password  String 
+  blogs Blog[]
+  todos Todo[]
 }
 
 model Blog {
@@ -26,10 +28,15 @@ model Blog {
   title     String
   description   String
   createdAt DateTime @default(now())
+  author User @relation(fields: [authorId], references: [id] )
+  authorId Int
+
 }
 
 model Todo {
   id        Int      @id @default(autoincrement())
   item     String
   createdAt DateTime @default(now())
+  author User @relation(fields: [authorId], references: [id] )
+  authorId Int
 }

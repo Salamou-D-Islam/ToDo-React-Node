@@ -8,8 +8,11 @@ const router = express.Router();
 
 router.get("/blogBack", async (req, res, next) => {
   try {
-    const result = await prisma.blog.findMany();
-  } catch {
+    const userId = req.user.id;
+    const result = await prisma.blog.findMany({
+      where: { authorId: userId },
+    });
+  } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
@@ -17,6 +20,7 @@ router.get("/blogBack", async (req, res, next) => {
 
 router.post("/blogBack", async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const { title, description, createdAt } = req.body;
     const date = new Date();
     const blog = await prisma.blog.create({
@@ -24,6 +28,21 @@ router.post("/blogBack", async (req, res, next) => {
         title,
         description,
         createdAt: date,
+        authorId: userId,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.delete("/blogBack/:id", async (req, res, next) => {
+  try {
+    const blogId = req.blog.id;
+    const deleteBlog = await prisma.blog.delete({
+      where: {
+        id: blogId,
       },
     });
   } catch (err) {
