@@ -88,7 +88,7 @@ router.post("/logout", (req, res) => {
 // ---------------- DASHBOARD ----------------
 
 // Middleware pour vérifier l'authentification
-function isAuthenticated(req, res, next) {
+export function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }

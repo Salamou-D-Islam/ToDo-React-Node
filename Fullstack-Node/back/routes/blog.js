@@ -3,10 +3,10 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import "../config/passport.js";
 import prisma from "../db/psql.js";
-
+import isAuthenticated from "../routes/auth.js";
 const router = express.Router();
 
-router.get("/blogBack", async (req, res, next) => {
+router.get("/dashboard/blogBack", isAuthenticated, async (req, res, next) => {
   try {
     if (!req.user || !req.user.id) {
       return res.status(401).json({ message: "Non autorisé" });
@@ -22,7 +22,7 @@ router.get("/blogBack", async (req, res, next) => {
   }
 });
 
-router.post("/blogBack", async (req, res, next) => {
+router.post("/dashboard/blogBack", async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { title, description, createdAt } = req.body;
@@ -42,7 +42,7 @@ router.post("/blogBack", async (req, res, next) => {
   }
 });
 
-router.delete("/blogBack/:id", async (req, res, next) => {
+router.delete("/dashboard/blogBack/:id", async (req, res, next) => {
   try {
     const blogId = req.blog.id;
     const deleteBlog = await prisma.blog.delete({
