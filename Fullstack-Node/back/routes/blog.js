@@ -44,16 +44,20 @@ router.post("/dashboard/blogBack", async (req, res, next) => {
 
 router.delete("/dashboard/blogBack/:id", async (req, res, next) => {
   try {
-    const blogId = req.blog.id;
+    const blogId = parseInt(req.params.id);
+    console.log("ID reçu du front :", blogId, "Type :", typeof blogId);
     const deleteBlog = await prisma.blog.delete({
       where: {
         id: blogId,
       },
     });
-    res.status(204).json(deleteBlog);
+    if (!deleteBlog) return res.status(404).json({ error: "Record not found" });
+    return res.status(200).send("Blog deleted successfully");
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res
+      .status(500)
+      .json({ error: "Database error occurred", details: err.message });
   }
 });
 
